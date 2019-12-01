@@ -19,3 +19,19 @@ I'm sure there's a lot of potential in training an end-to-end net.
 5. I'm moving to HPC, since the experiments are becoming longer and longer and kaggle usually crashes sooner or later 🤷.
 
 6. I downloaded the dataset and placed it in ```/data/cmpe257-02-fa2019/team-1-meerkats``` on HPC. 🎉
+
+
+# Week 6/7 - update:
+
+
+# Week 8 - update:
+- changed windowing slightly to include a bone window. 
+The 3 channels used to be:
++ brain
++ subdural
++ soft tissue
+
+I changed it to be:
++ brain
++ subdural
++ bones
