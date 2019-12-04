@@ -58,14 +58,14 @@ def window_image(dcm, window_center, window_width):
 
     return img
 
-def bsb_window(dcm):
+ddef bsb_window(dcm):
     brain_img = window_image(dcm, 40, 80)
     subdural_img = window_image(dcm, 80, 200)
-    soft_img = window_image(dcm, 40, 380)
+    bone_img = window_image(dcm, 600, 2800)
     
     brain_img = (brain_img - 0) / 80
     subdural_img = (subdural_img - (-20)) / 200
-    soft_img = (soft_img - (-150)) / 380
+    bone_img = (bone_img + 800) / 2800
 
     plt.imshow(brain_img, cmap=plt.cm.bone)
     plt.title('Brain Matter')
@@ -75,14 +75,14 @@ def bsb_window(dcm):
     plt.title('Subdural/Blood')
     plt.savefig('static/images/subdural_img.png')
 
-    plt.imshow(soft_img, cmap=plt.cm.bone)
-    plt.title('Soft Tissue')
-    plt.savefig('static/images/soft_img.png')
+    plt.imshow(bone_img, cmap=plt.cm.bone)
+    plt.title('Bone')
+    plt.savefig('static/images/bone.png')
 
     windowing = [ 
     {'url': "/static/images/brain_img.png"}, 
     {'url': "/static/images/subdural_img.png"},
-    {'url': "/static/images/soft_img.png"}]
+    {'url': "/static/images/bone.png"}]
 
     #bsb_img = np.array([brain_img, subdural_img, soft_img]).transpose(1,2,0)
 
