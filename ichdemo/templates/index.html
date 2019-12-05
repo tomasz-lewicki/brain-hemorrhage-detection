@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 {% extends "base.html" %}
 {% block content %}
@@ -24,6 +25,37 @@
       </div>
     {% endfor %}
     </div>
+
+    <h2>Diagnosis</h2>
+    <table>
+      <tr>
+        <th>Hemorrhage type</th>
+        <th>Probability</th>
+      </tr>
+      <tr>
+        <td>epidural</td>
+        <td>{{prediction[0][0]}}</td>
+      </tr>
+      <tr>
+        <td>intraparenchymal</td>
+        <td>{{prediction[0][1]}}</td>
+      </tr>
+      <tr>
+        <td>intraventricular</td>
+        <td>{{prediction[0][2]}}</td>
+      </tr>
+      <tr>
+        <td>subarachnoid</td>
+        <td>{{prediction[0][3]}}</td>
+      </tr>
+      <tr>
+        <td>subdural</td>
+        <td>{{prediction[0][4]}}</td>
+      </tr>
+    </table>
+
+    				
+
 {% else %}
 <center><h4> </h4>
 {% endif %}

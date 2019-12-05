@@ -3,7 +3,13 @@ import pydicom
 import numpy as np
 import matplotlib.pyplot as plt
 from flask import Flask, request, render_template, url_for, redirect
+from magicsauce import * 
+import keras
+import tensorflow as tf
+import cv2
 
+model = keras.models.load_model(weights_file, custom_objects={'correct_positive_diagnoses': correct_positive_diagnoses})
+model._make_predict_function()
 app = Flask(__name__, static_url_path='/static')
 
 
@@ -17,7 +23,18 @@ def handleFileUpload():
         dcm = request.files['brainscan']
         if dcm.filename != ' ':
             ds = pydicom.dcmread(dcm)
+
         dcmarray = ds.pixel_array
+
+        img = window_and_scale_brain_subdural_soft(ds)
+        img = cv2.resize(img, INPUT_SHAPE[:2], interpolation=cv2.INTER_LINEAR)
+        tensor = np.expand_dims(img, axis=0)
+
+        graph = tf.get_default_graph()
+        with graph.as_default():
+            p = model.predict(tensor)
+
+        print(p)
         max_intensity = np.max(dcmarray)
         plt.imshow(dcmarray, cmap=plt.cm.bone)
         plt.savefig('static/images/rawimg.png')
@@ -25,7 +42,7 @@ def handleFileUpload():
         bsb= bsb_window(ds)
             #dcm.save(os.path.join('C:/Users/Public/Pictures', dcm.filename))
     return render_template('index.html', max=max_intensity, metadata= metadata, 
-        url = "/static/images/rawimg.png", windowing = bsb)
+        url = "/static/images/rawimg.png", windowing = bsb, prediction=p)
 
 def metaprint(dataset):
     metadata = []
@@ -58,7 +75,7 @@ def window_image(dcm, window_center, window_width):
 
     return img
 
-ddef bsb_window(dcm):
+def bsb_window(dcm):
     brain_img = window_image(dcm, 40, 80)
     subdural_img = window_image(dcm, 80, 200)
     bone_img = window_image(dcm, 600, 2800)
@@ -89,4 +106,6 @@ ddef bsb_window(dcm):
     return windowing
 
 if __name__ == '__main__':
-    app.run(debug=True)     
+    app.run(debug=True, port=9999)     
+
+
