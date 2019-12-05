@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intracranial Hemorrhage Detection with a Convolutional Neural Network</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://code.jquery.com/jquery 2.1.4.min.js"></script> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gupter">
+</head>
+<style>
+body, html {
+  height: 100%;
+  font-family: "Gupter", sans-serif;
+  background-color: #AFDBF5;
+}
+</style>
+<body>
+<form enctype="multipart/form-data" method="post" action="http://localhost:7777/upload/">
+    <center>
+    <h3>Select DCM file to predict intracranial hemorrhage type</h3>
+    <input type="file" accept=".dcm"><br>
+    <input type="submit" value="Analyze" onclick="Analzye()">
+    </center>
+</form>
+
+<script type="text/javascript">
+   function Analyze(input) {
+        $.ajax({
+        type: "POST",
+        url: "/intensity.py",
+        data: { param: input },
+        success: callbackFunc
+    });
+}
+</script>
+</body>
+</html>

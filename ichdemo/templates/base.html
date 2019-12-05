@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intracranial Hemorrhage Detection with a Convolution Neural Network</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://code.jquery.com/jquery 2.1.4.min.js"></script> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gupter">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+body, html {
+  height: 100%;
+  font-family: "Gupter", sans-serif;
+  background-color: #AFDBF5;
+}
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+}
+
+</style>
+<body>
+<form action="/handleUpload" method="post" enctype="multipart/form-data">
+    <center>
+    <h3>Select DCM file to predict intracranial hemorrhage type</h3>
+    <input type="file" accept=".dcm" name="brainscan"><br>
+    <input type="submit" value="Analyze">
+    </center>
+</form>
+<br>
+<br>
+
+{% block content %}{% endblock %}
+</body>
+</html>
