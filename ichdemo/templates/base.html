@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="http://code.jquery.com/jquery 2.1.4.min.js"></script> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gupter">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <style>
 body, html {
@@ -13,6 +14,19 @@ body, html {
   font-family: "Gupter", sans-serif;
   background-color: #AFDBF5;
 }
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+}
+
 </style>
 <body>
 <form action="/handleUpload" method="post" enctype="multipart/form-data">

@@ -2,16 +2,28 @@
 {% extends "base.html" %}
 {% block content %}
 {% if max %}
-   <div>
-   <left>
+  <div class="row">
+    <div class="column">
+    <h2>DICOM Metadata</h2>
+    <ul style="list-style-type:circle;">
     {% for meta in metadata %}
-    <p><b>{{meta.name}}:</b>   {{meta.value}}</p>
+    <li><b>{{meta.name}}:</b>   {{meta.value}}</li>
+    {% endfor %}
+    </ul>
+    </div>
+    <div class="column">
+      <h2>Raw Scan</h2>
+      <img src={{url}} style="width:60%">
+    </div>
+  </div>
+    <h2>Windowing</h2>
+    <div class="row">
+    {% for window in windowing %}
+      <div class="column">
+        <img src={{window.url}} style="width:100%">
+      </div>
     {% endfor %}
     </div>
-    <div>
-    <right>
-      <h3>Raw Scan</h3>
-      <img src={{url}}>
 {% else %}
 <center><h4> </h4>
 {% endif %}
