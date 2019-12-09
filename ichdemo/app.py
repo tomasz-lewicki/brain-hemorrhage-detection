@@ -37,12 +37,11 @@ def handleFileUpload():
         print(p)
         max_intensity = np.max(dcmarray)
         plt.imshow(dcmarray, cmap=plt.cm.bone)
-        plt.savefig('static/images/rawimg.png')
+        plt.savefig('static/images/'+fname+'_raw_img.png')
         metadata = metaprint(ds)
-        bsb= bsb_window(ds)
-            #dcm.save(os.path.join('C:/Users/Public/Pictures', dcm.filename))
+        bsb= bsb_window(ds, fname)
     return render_template('index.html', max=max_intensity, metadata= metadata, 
-        url = "/static/images/rawimg.png", windowing = bsb, prediction=p)
+        url = '/static/images/'+fname+'_raw_img.png', windowing = bsb, prediction=p)
 
 def metaprint(dataset):
     metadata = []
@@ -75,7 +74,7 @@ def window_image(dcm, window_center, window_width):
 
     return img
 
-def bsb_window(dcm):
+def bsb_window(dcm, filename):
     brain_img = window_image(dcm, 40, 80)
     subdural_img = window_image(dcm, 80, 200)
     bone_img = window_image(dcm, 600, 2800)
@@ -86,20 +85,24 @@ def bsb_window(dcm):
 
     plt.imshow(brain_img, cmap=plt.cm.bone)
     plt.title('Brain Matter')
-    plt.savefig('static/images/brain_img.png')
+    bmpath = 'static/images/'+filename+'_brain_img.png'
+    plt.savefig(bmpath)
 
     plt.imshow(subdural_img, cmap=plt.cm.bone)
     plt.title('Subdural/Blood')
-    plt.savefig('static/images/subdural_img.png')
+    sdpath = 'static/images/'+filename+'_subdural_img.png'
+    plt.savefig(sdpath)
 
+    #plt.imshow(bone_img, cmap=plt.cm.bone)
     plt.imshow(bone_img, cmap=plt.cm.bone)
     plt.title('Bone')
-    plt.savefig('static/images/bone.png')
+    bopath = 'static/images/'+filename+'_bone.png'
+    plt.savefig(bopath)
 
     windowing = [ 
-    {'url': "/static/images/brain_img.png"}, 
-    {'url': "/static/images/subdural_img.png"},
-    {'url': "/static/images/bone.png"}]
+    {'url': bmpath}, 
+    {'url': sdpath},
+    {'url': bopath}]
 
     #bsb_img = np.array([brain_img, subdural_img, soft_img]).transpose(1,2,0)
 
