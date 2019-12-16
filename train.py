@@ -15,10 +15,12 @@ from datetime import datetime
 DATA_DIR = '/data/cmpe257-02-fa2019/team-1-meerkats/rsna-intracranial-hemorrhage-detection/'
 TIMESTAMP_BEGIN = str(datetime.now(pytz.timezone('America/Los_Angeles'))).replace(" ", "-")
 MODEL_NAME = TIMESTAMP_BEGIN + '-ResNet50-conv+head-670k' # should change this every time!
-WEIGHTS_DIR = '/data/cmpe257-02-fa2019/team-1-meerkats/weights/' + MODEL_NAME + '/'
-GRAPH_DIR = 'Graphs/Graph-' + MODEL_NAME
+
+WEIGHTS_DIR = 'weights/' + MODEL_NAME + '/'
+TB_DIR = 'tensorboard-graphs/Graph-' + MODEL_NAME
+
 os.mkdir(WEIGHTS_DIR)
-os.mkdir(GRAPH_DIR)
+os.mkdir(TB_DIR)
 
 TB_FREQ = 67000
 
@@ -160,27 +162,20 @@ class DataGenerator(keras.utils.Sequence):
 # In[4]:
 
 
-from sklearn.model_selection import ShuffleSplit 
+from sklearn.model_selection import train_test_split
 
-train_df = read_trainset()
-
-# k-fold splitting
-ss = ShuffleSplit(n_splits=10, test_size=0.1, random_state=257).split(train_df.index)
-# get indeces for one split
-train_idx, valid_idx = next(ss)
-train_df_kfold = train_df.iloc[train_idx]
-valid_df_kfold = train_df.iloc[valid_idx]
-
+df = read_trainset()
+train_df, test_df = train_test_split(df,test_size=0.1, random_state=257)
 
 traingen = DataGenerator(img_dir=DATA_DIR+'stage_2_train/',
-                         image_IDs=train_df_kfold.index, #MAGIC
-                         labels_df=train_df_kfold, #MAGIC
+                         image_IDs=train_df.index, #MAGIC
+                         labels_df=train_df, #MAGIC
                          batch_size=16,
                          img_size=INPUT_SHAPE)
 
-validgen = DataGenerator(img_dir=DATA_DIR+'stage_2_train/',
-                         image_IDs=valid_df_kfold.index, #MAGIC
-                         labels_df=valid_df_kfold, #MAGIC
+testgen = DataGenerator(img_dir=DATA_DIR+'stage_2_train/',
+                         image_IDs=test_df.index, #MAGIC
+                         labels_df=test_df, #MAGIC
                          batch_size=16,
                          img_size=INPUT_SHAPE)
 
@@ -280,12 +275,12 @@ model.summary()
 
 mc = keras.callbacks.ModelCheckpoint(filepath=WEIGHTS_DIR+MODEL_NAME+'-epoch={epoch:02d}-valid-loss={val_loss:.2f}.hdf5', monitor='loss', verbose=True, save_best_only=False, save_weights_only=False)
 
-tb = keras.callbacks.TensorBoard(log_dir=GRAPH_DIR, histogram_freq=0, update_freq=TB_FREQ,
+tb = keras.callbacks.TensorBoard(log_dir=TB_DIR, histogram_freq=0, update_freq=TB_FREQ,
           write_graph=True, write_images=True) # about 10 checkpoints per epoch
 
 hist = model.fit_generator(traingen,
-                    validation_data = validgen,
-                    epochs=20,
+                    validation_data = testgen,
+                    epochs=5,
                     verbose=True,
                     use_multiprocessing=True,
                     workers=4,
