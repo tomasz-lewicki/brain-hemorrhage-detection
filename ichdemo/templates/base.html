@@ -3,7 +3,7 @@
 <title>Intracranial Hemorrhage Detection with a Convolution Neural Network</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -24,13 +24,13 @@ body, html {
 
 /* First image (Project Name) */
 .bgimg-1 {
-  background-image: url('https://multiplesclerosisnewstoday.com/wp-content/uploads/2019/03/shutterstock_472971505_zpsttwkyiau-1000x480.jpg');
+  background-image: url('/static/images/header.jpg');
   min-height: 100%;
 }
 
 /* Second image (Results) */
 .bgimg-2 {
-  background-image: url("https://news.yale.edu/sites/default/files/styles/featured_media/public/tomography-of-brain.jpeg");
+  background-image: url('/static/images/results.jpeg');
   min-height: 400px;
 }
 
