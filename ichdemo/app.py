@@ -25,6 +25,7 @@ def handleFileUpload():
             ds = pydicom.dcmread(dcm)
 
         dcmarray = ds.pixel_array
+        fname = dcm.filename
 
         img = window_and_scale_brain_subdural_soft(ds)
         img = cv2.resize(img, INPUT_SHAPE[:2], interpolation=cv2.INTER_LINEAR)
