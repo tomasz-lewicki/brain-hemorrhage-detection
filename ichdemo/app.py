@@ -35,6 +35,7 @@ def handleFileUpload():
             p = model.predict(tensor)
 
         print(p)
+        fname = dcm.filename
         max_intensity = np.max(dcmarray)
         plt.imshow(dcmarray, cmap=plt.cm.bone)
         plt.savefig('static/images/'+fname+'_raw_img.png')
