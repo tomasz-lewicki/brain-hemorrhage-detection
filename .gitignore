@@ -126,3 +126,4 @@ dmypy.json
 *.hdf5
 Graphs
 *.h5
+*.csv
