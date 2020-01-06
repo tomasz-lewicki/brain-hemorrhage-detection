@@ -29,6 +29,8 @@ conda activate brainenv
 (brainenv) jupyter notebook
 ```
 
+
+<!-- 
 # Member contributions:
 
 ## M. Kumar
@@ -128,4 +130,4 @@ I think that's the way to go forward, since we cannot leave the heavy _dataset i
 
 ### Week 1 - update:
 1. I created the first model of the Data Generator 
-2. First neural network working
+2. First neural network working -->
