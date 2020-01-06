@@ -4,9 +4,12 @@ In this project we detect and diagnose the type of hemorrhage in CT scans using 
 
 ![](images/flow.png)
 
+The training code is available in ```train.py```. Code for the metrics reported in the paper is available in ```notebooks/Week 11 - tlewicki - metrics clean.ipynb```.
+
 ## Setup instructions:
 
-1. The dataset can be downloaded from [here](https://www.kaggle.com/c/rsna-intracranial-hemorrhage-detection/data) (the dataset 500 GB). There's a dowloaded and unzipped version on SJSU HPC disk at: ```'/data/cmpe257-02-fa2019/team-1-meerkats/rsna-intracranial-hemorrhage-detection/'```,
+1. The dataset can be downloaded from [here](https://www.kaggle.com/c/rsna-intracranial-hemorrhage-detection/data) (the dataset 500 GB). There's a dowloaded and unzipped version on SJSU HPC disk at: ```'/data/cmpe257-02-fa2019/team-1-meerkats/rsna-intracranial-hemorrhage-detection/'```
+
 2. Install the requirements and activate the virtual environment:
 ```shell
 conda env create -f environment.yml
@@ -24,10 +27,12 @@ conda activate brainenv
 ```
 6. Navigate your browser to http://localhost:9999/ to interact with the demo app
 
-7. Run any of our notebooks by typing:
+7. You can run any notebooks in ```notebooks/``` dir by typing:
 ```shell
 (brainenv) jupyter notebook
 ```
+
+
 
 
 <!-- 
